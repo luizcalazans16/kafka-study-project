@@ -14,14 +14,16 @@ class StringProducerService(
     }
 
     fun sendMessage(message: String) {
-        kafkaTemplate.send(TOPIC_NAME, message).addCallback(
-            {
-                if (it != null) {
-                    logger.info { "Message sent successfully [$message]" }
-                    logger.info { "Partition: [${it.recordMetadata.partition()}]" }
-                    logger.info { "Offset: [${it.recordMetadata.offset()}]" }
-                }
-            },
-            { logger.error { "Error while sending message" } })
+        logger.info { "Sending message: [$message]" }
+        kafkaTemplate.send(TOPIC_NAME, message)
+//            .addCallback(
+//            {
+//                if (it != null) {
+//                    logger.info { "Message sent successfully [$message]" }
+//                    logger.info { "Partition: [${it.recordMetadata.partition()}]" }
+//                    logger.info { "Offset: [${it.recordMetadata.offset()}]" }
+//                }
+//            },
+//            { logger.error { "Error while sending message" } })
     }
 }
